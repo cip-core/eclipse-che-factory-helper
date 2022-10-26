@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Eclipse Che Factory Helper</title>
+</head>
+
+<body>
+    <p id="message"></p>
+
+    <script>
+        const devspacesUrl = 'https://devspaces.apps.c1.ocp.dev.sgcip.com';
+        const { referrer } = document;
+        if (referrer) {
+            const url = new URL(referrer);
+            if (referrer.includes("github.com")) {
+                pathname = url.pathname;
+                const regexp = /[^/]*/g;
+                const array = pathname.match(regexp);
+                const repoUrl = url.protocol + '//' + url.hostname + '/' + array[1] + '/' + array[3];
+                window.location.replace(devspacesUrl + '/dashboard/#/load-factory?url=' + repoUrl);
+            } else {
+                document.getElementById("message").innerHTML = 'This redirector currently supports only <a href="https://github.com">GitHub.com</a> repositories';
+            }
+        } else {
+            document.getElementById("message").innerHTML = 'This URL shall not be accessed directly, but from README.md files hosted in major online Git repositories hosting services such as <a href="https://github.com">GitHub.com</a> or <a href="https://gitlab.com">GitLab.com</a>';
+        }
+    </script>
+</body>
+
+</html>
